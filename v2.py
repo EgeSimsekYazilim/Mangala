@@ -144,7 +144,6 @@ def get_best_from(plr1, plr2, pos, depth, alpha, beta):
             elif move == 6 and xv in [7, 20, 34]: ev += 0.65 * factor
             elif math.isinf(factor): return pos[0]
 
-        print(ev)
         if ev > best_eval:
             best_eval = ev
             best_move = move
