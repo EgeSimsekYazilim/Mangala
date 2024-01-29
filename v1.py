@@ -1,5 +1,5 @@
 """
-Turkish Mancala Bot (v1.0)
+Turkish Mancala Bot (v1)
 Made by Ege Şimşek, visit (www.smsk.one)
 """
 import copy
