@@ -1,5 +1,5 @@
 """
-Turkish Mancala Bot (v1.1)
+Turkish Mancala Bot (v2)
 Made by Ege Şimşek, visit (www.smsk.one)
 """
 from os import system, name
@@ -54,7 +54,6 @@ def make_move(move, p1, p2):
     val = temp_p1[move]
     v = max(1, val - 1)
     again = False
-    extra = [0, -1]
 
     for j in range(v):
         cur = 8 - move + j
@@ -67,33 +66,28 @@ def make_move(move, p1, p2):
             temp_p2[cur - 20] += 1
             if temp_p2[cur - 20] % 2 == 0 and last:
                 temp_p1[0] += temp_p2[cur - 20]
-                extra = [temp_p2[cur - 20], 0]
                 temp_p2[cur - 20] = 0
         elif 14 > cur > 7:
             temp_p2[cur - 7] += 1
             if temp_p2[cur - 7] % 2 == 0 and last:
                 temp_p1[0] += temp_p2[cur - 7]
-                extra = [temp_p2[cur - 7], 0]
                 temp_p2[cur - 7] = 0
         elif 33 > cur > 26:
             temp_p1[33 - cur] += 1
             if temp_p1[33 - cur] == 1 and temp_p2[33 - cur] != 0 and last:
                 temp_p1[0] += temp_p1[33 - cur] + temp_p2[33 - cur]
-                extra = [temp_p1[33 - cur] + temp_p2[33 - cur], 1]
                 temp_p1[33 - cur] = 0
                 temp_p2[33 - cur] = 0
         elif 20 > cur > 13:
             temp_p1[20 - cur] += 1
             if temp_p1[20 - cur] == 1 and temp_p2[20 - cur] != 0 and last:
                 temp_p1[0] += temp_p1[20 - cur] + temp_p2[20 - cur]
-                extra = [temp_p1[20 - cur] + temp_p2[20 - cur], 1]
                 temp_p1[20 - cur] = 0
                 temp_p2[20 - cur] = 0
         elif 7 > cur:
             temp_p1[7 - cur] += 1
             if temp_p1[7 - cur] == 1 and temp_p2[7 - cur] != 0 and last:
                 temp_p1[0] += temp_p1[7 - cur] + temp_p2[7 - cur]
-                extra = [temp_p1[7 - cur] + temp_p2[7 - cur], 1]
                 temp_p1[7 - cur] = 0
                 temp_p2[7 - cur] = 0
 
@@ -176,9 +170,10 @@ def find_best_move(op, plr1, plr2, depth, alpha=-math.inf, beta=math.inf):
                         plan = s[0].pop(0)
                         break
         if plan is not None:
-            return get_best_from(plr1, plr2, [i for i in plan if i in pos], depth, alpha, beta)
+            sleep(1.5)
+            return get_best_from(plr1, plr2, [i for i in plan if i in pos], 3, alpha, beta)
 
-    return get_best_from(plr1, plr2, pos, depth, alpha, beta)
+    return get_best_from(plr1, plr2, pos, depth - 1, alpha, beta)
 
 
 def minimax_alpha_beta(plr1, plr2, depth, maximizing_player, evaluate_function, alpha, beta):
@@ -233,8 +228,6 @@ def main():
         p1 = [0, 4, 4, 4, 4, 4, 4]
         p2 = [0, 4, 4, 4, 4, 4, 4]
         start = choice([True, False])
-        again = False
-        gg = False
         game = True
         pm = None
         while game:
